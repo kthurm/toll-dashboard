@@ -10,7 +10,12 @@ export async function fetchTollRecords(): Promise<TollRecord[]> {
     },
     {
       plaza: "Exit 21 — Catskill",
-      vehicles: 942,
+      vehicles: 1215,
+      recordedAt: "2026-09-01T08:00:00Z",
+    },
+    {
+      plaza: "Exit 21-B — New Baltimore",
+      vehicles: 1098,
       recordedAt: "2026-09-01T08:00:00Z",
     },
   ];

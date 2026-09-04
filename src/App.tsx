@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { fetchTollRecords } from "./services/tollApi";
 import type { TollRecord } from "./types/toll";
+import MetricCard from "./components/MetricCard";
 
 function App() {
   const [tollRecords, setTollRecords] = useState<TollRecord[]>([]);
@@ -20,7 +21,10 @@ function App() {
     }
     loadTollRecords();
   }, []);
-
+  const totalVehicles = tollRecords.reduce(
+    (total, record) => total + record.vehicles,
+    0,
+  );
   return (
     <>
       <main className="p-8">
@@ -32,7 +36,24 @@ function App() {
             {error}
           </p>
         ) : (
-          <p className="mt-2">Records loaded: {tollRecords.length}</p>
+          <div>
+            <p className="mt-2">Records loaded: {tollRecords.length}</p>
+
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {tollRecords.map((record) => (
+                <MetricCard
+                  key={record.plaza}
+                  label={`Vehicles at ${record.plaza}`}
+                  value={record.vehicles}
+                />
+              ))}
+              <MetricCard
+                className="bg-blue-100"
+                label="Total Vehicles"
+                value={totalVehicles}
+              />
+            </div>
+          </div>
         )}
       </main>
     </>
